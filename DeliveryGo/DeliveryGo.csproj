@@ -7,4 +7,22 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Carrito\" />
+    <None Remove="Envio\" />
+    <None Remove="Pago\" />
+    <None Remove="Pedido\" />
+    <None Remove="Checkout\" />
+    <None Remove="Interfaces\" />
+    <None Remove="Utils\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Carrito\" />
+    <Folder Include="Envio\" />
+    <Folder Include="Pago\" />
+    <Folder Include="Pedido\" />
+    <Folder Include="Checkout\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Utils\" />
+  </ItemGroup>
 </Project>
