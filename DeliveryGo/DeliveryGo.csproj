@@ -15,6 +15,9 @@
     <None Remove="Checkout\" />
     <None Remove="Interfaces\" />
     <None Remove="Utils\" />
+    <None Remove="Envio\Core\" />
+    <None Remove="Envio\Core\Strategy\" />
+    <None Remove="Envio\Core\Singleton\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Carrito\" />
@@ -24,5 +27,8 @@
     <Folder Include="Checkout\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Utils\" />
+    <Folder Include="Envio\Core\" />
+    <Folder Include="Envio\Core\Strategy\" />
+    <Folder Include="Envio\Core\Singleton\" />
   </ItemGroup>
 </Project>
