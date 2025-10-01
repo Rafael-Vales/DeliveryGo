@@ -8,6 +8,9 @@ namespace DeliveryGo.Carrito
         private readonly Carrito _carrito = new();
         private readonly EditorCarrito _editor = new();
 
+        public Carrito Carrito => _carrito;
+
+
         public void AgregarProducto(string sku, string nombre, decimal precio, int cantidad)
         {
             var item = new Item
@@ -42,6 +45,11 @@ namespace DeliveryGo.Carrito
         public void MostrarHistorial()
         {
             _editor.MostrarHistorial();
+        }
+
+        public decimal ObtenerSubtotal()
+        {
+            return _carrito.ObtenerSubtotal();
         }
     }
 }
