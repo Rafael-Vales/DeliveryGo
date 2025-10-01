@@ -12,6 +12,7 @@ namespace DeliveryGo.Envio.Core.Strategy
 		private ConfigManager() { }
 
 		public decimal EnvioGratisDesde { get; set; }
-	}
+        public decimal IVA { get; set; }
+    }
 }
 

@@ -36,6 +36,8 @@ namespace DeliveryGo.Carrito
 
        
 
+
+
         public void CambiarCantidad(string sku, int nuevaCantidad)
         {
             if (_items.ContainsKey(sku))
@@ -59,6 +61,11 @@ namespace DeliveryGo.Carrito
 
         public IReadOnlyCollection<Item> ObtenerItems() => _items.Values.ToList().AsReadOnly();
 
+
+        public decimal ObtenerSubtotal()
+        {
+            return _items.Values.Sum(item => item.Precio * item.Cantidad);
+        }
 
     }
 }
