@@ -6,6 +6,7 @@ using DeliveryGo.Envio.Core.Strategy;
 using DeliveryGo.Pedido.Core;
 using DeliveryGo.Pedido.Core.Observers;
 using DeliveryGo.Checkout;
+using DeliveryGo.Utils;
 
 
 
@@ -24,53 +25,100 @@ var clienteObs = new ClienteObserver();
 var logisticaObs = new LogisticaObserver();
 var auditoriaObs = new AuditoriaObserver();
 
-ClienteObserver.Suscribir(pedidoService);
-LogisticaObserver.Suscribir(pedidoService);
-AuditoriaObserver.Suscribir(pedidoService);
+pedidoService.Suscribir(clienteObs.Actualizar);
+pedidoService.Suscribir(logisticaObs.Actualizar);
+pedidoService.Suscribir(auditoriaObs.Actualizar);
 
 var facade = new CheckoutFacade(carritoPort, new EnvioMoto(), pedidoService);
 
 
-//Prueba etapa 1
-Console.WriteLine("Etapa 1: Command");
-facade.AgregarItem("123", "Pantalon", 15000m, 2);
-facade.AgregarItem("456", "Remera", 12000m, 1);
-facade.CambiarCantidad("456", 2);
-facade.QuitarItem("123");
-carritoPort.MostrarCarrito();
-Console.WriteLine("------------------------------------------------");
-Console.WriteLine();
+int opcion;
+bool salir = false;
 
-// Prueba etapa 2
-Console.WriteLine("Etapa 2: Strategy");
-Console.WriteLine($"Costo total con envío Moto: {facade.CalcularTotal()}");
-facade.ElegirEnvio(new EnvioCorreo());
-Console.WriteLine($"Costo total con envío Correo: {facade.CalcularTotal()}");
-Console.WriteLine("------------------------------------------------");
-Console.WriteLine();
 
-// Prueba etapa 3 
-Console.WriteLine("🔹 Etapa 3: Pago");
-bool pagado = facade.Pagar("Tarjeta", aplicarIVA: true, cupon: 0.10m);
 
-if (pagado)
+
+
+do
 {
-    var pedido = facade.ConfirmarPedido("Calle Falsa 123", "tarjeta");
-    Console.WriteLine($"[Pedido confirmado] ID: {pedido.Id} - Monto: {pedido.Monto} - Estado final: {pedido.Estado}");
-}
-else
-{
-    Console.WriteLine("Pago fallido.");
-}
+    Console.Clear();
+    Console.WriteLine("==== DELIVERYGO — MENÚ PRINCIPAL ====");
+    Console.WriteLine("1. Agregar ítem");
+    Console.WriteLine("2. Cambiar cantidad");
+    Console.WriteLine("3. Quitar ítem");
+    Console.WriteLine("4. Ver subtotal y total");
+    Console.WriteLine("5. Deshacer último cambio ");
+    Console.WriteLine("6. Rehacer cambio ");
+    Console.WriteLine("7. Elegir tipo de envío");
+    Console.WriteLine("8. Pagar");
+    Console.WriteLine("9. Confirmar pedido");
+    Console.WriteLine("10. (Des)Suscribir logística");
+    Console.WriteLine("0. Salir");
+    Console.Write("\nElegí una opción: ");
 
-// dessuscripcion mediante el observer
-LogisticaObserver.Desuscribir(pedidoService);
-Console.WriteLine("\n🔕 Logística desuscrita.");
+    string? input = Console.ReadLine();
+    Console.WriteLine();
 
-// Confirmar pedido
-var pedidoConfirmado = facade.ConfirmarPedido("Calle 123", "tarjeta");
+    if (!int.TryParse(input, out opcion))
+    {
+        Console.WriteLine(" Entrada inválida. Presioná una tecla para continuar...");
+        Console.ReadKey();
+        continue;
+    }
 
-// después cambiar manualmente
-pedidoService.CambiarEstado(EstadoPedido.Enviando);
+    switch (opcion)
+    {
+        case 1:
+            Menu.AgregarItem(facade);
+            break;
+        case 2:
+            Menu.CambiarCantidad(facade);
+            break;
+        case 3:
+            Menu.QuitarItem(facade);
+            break;
+        case 4:
+            Menu.VerTotales(carritoPort, facade);
+            break;
+        case 5:
+            Menu.Undo(carritoPort);
+            break;
+        case 6:
+            Menu.Redo(carritoPort);
+            break;
+        case 7:
+            Menu.ElegirEnvio(facade);
+            break;
+        case 8:
+            Menu.Pagar(facade);
+            break;
+        case 9:
+            Menu.ConfirmarPedido(facade);
+            break;
+        case 10:
+            Menu.ToggleLogistica(pedidoService, logisticaObs);
+            break;
+        case 0:
+            salir = true;
+            Console.WriteLine(" Saliendo del sistema...");
+            break;
+        default:
+            Console.WriteLine(" Opción inválida.");
+            break;
+    }
 
-Console.ReadKey();
+    if (!salir)
+    {
+        Console.WriteLine("\nPresioná una tecla para continuar...");
+        Console.ReadKey();
+    }
+
+} while (!salir);
+
+
+
+
+
+
+
+
