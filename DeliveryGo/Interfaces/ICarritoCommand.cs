@@ -6,5 +6,6 @@ namespace DeliveryGo.Interfaces
     public interface ICarritoCommand
     {
         void Ejecutar(Carrito carrito);
+        void Deshacer(Carrito carrito);
     }
 }

@@ -16,11 +16,11 @@
     <None Remove="Interfaces\" />
     <None Remove="Utils\" />
     <None Remove="Envio\Core\" />
-    <None Remove="Envio\Core\Strategy\" />
-    <None Remove="Envio\Core\Singleton\" />
     <None Remove="Pago\Core\" />
     <None Remove="Pedido\Core\" />
     <None Remove="Pedido\Core\Observers\" />
+    <None Remove="Envio\Core\Singleton\" />
+    <None Remove="Envio\Core\Strategy\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Carrito\" />
@@ -31,10 +31,10 @@
     <Folder Include="Interfaces\" />
     <Folder Include="Utils\" />
     <Folder Include="Envio\Core\" />
-    <Folder Include="Envio\Core\Strategy\" />
-    <Folder Include="Envio\Core\Singleton\" />
     <Folder Include="Pago\Core\" />
     <Folder Include="Pedido\Core\" />
     <Folder Include="Pedido\Core\Observers\" />
+    <Folder Include="Envio\Core\Singleton\" />
+    <Folder Include="Envio\Core\Strategy\" />
   </ItemGroup>
 </Project>

@@ -13,7 +13,6 @@ namespace DeliveryGo.Checkout
 	public class CheckoutFacade
 	{
 		private readonly CarritoPort _carrito;
-		private readonly EditorCarrito _editor;
 		private IEnvioStrategy _envioActual;
 		private readonly PedidoService _pedidoService;
 
@@ -21,32 +20,27 @@ namespace DeliveryGo.Checkout
 		{
 			_carrito = carrito;
 			_envioActual = envioInicial;
-			_editor = new EditorCarrito();
 			_pedidoService = pedidos;
 		}
 
-		private void Run (ICarritoCommand command)
-		{
-            _editor.Ejecutar(command, _carrito.Carrito);
+
+
+        public void AgregarItem(string sku, string nombre, decimal precio, int cantidad)
+        {
+            _carrito.AgregarProducto(sku, nombre, precio, cantidad);
         }
 
-		public void AgregarItem(string sku, string nombre, decimal precio, int cantidad)
-		{
-			var item = new Item { Sku = sku, Nombre = nombre, Precio = precio, Cantidad = cantidad };
-			Run(new AgregarItemCommand(item));
-		}
+        public void CambiarCantidad(string sku, int cantidad)
+        {
+            _carrito.CambiarCantidad(sku, cantidad);
+        }
 
-		public void CambiarCantidad(string sku, int cantidad)
-		{
-			Run(new SetCantidadCommand(sku, cantidad));
-		}
+        public void QuitarItem(string sku)
+        {
+            _carrito.QuitarProducto(sku);
+        }
 
-		public void QuitarItem(string sku)
-		{
-			Run(new QuitarItemCommand(sku));
-		}
-
-		public void ElegirEnvio(IEnvioStrategy nueva)
+        public void ElegirEnvio(IEnvioStrategy nueva)
 		{
 			_envioActual = nueva;
 		}

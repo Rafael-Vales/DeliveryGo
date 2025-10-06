@@ -8,6 +8,10 @@ namespace DeliveryGo.Carrito
 	{
         private Dictionary<string, Item> _items = new();
 
+        public IReadOnlyCollection<Item> ObtenerItems() => _items.Values.ToList().AsReadOnly();
+
+
+
         public void AgregarItem(Item item)
         {
             if (_items.ContainsKey(item.Sku))
@@ -34,8 +38,20 @@ namespace DeliveryGo.Carrito
         }
 
 
-       
-
+        public Item? ObtenerItem(string sku)
+        {
+            if (_items.TryGetValue(sku, out var item))
+            {
+                return new Item
+                {
+                    Sku = item.Sku,
+                    Nombre = item.Nombre,
+                    Precio = item.Precio,
+                    Cantidad = item.Cantidad
+                };
+            }
+            return null;
+        }
 
 
         public void CambiarCantidad(string sku, int nuevaCantidad)
@@ -50,16 +66,26 @@ namespace DeliveryGo.Carrito
             }
         }
 
+
+        public int ObtenerCantidad(string sku)
+        {
+            if (_items.TryGetValue(sku, out var item))
+            {
+                return item.Cantidad;
+            }
+            return 0; 
+        }
+
+
         public void Mostrar()
         {
             Console.WriteLine("Carrito: ");
             foreach(var item in _items.Values)
             {
                 Console.WriteLine($"-{item.Nombre} x {item.Cantidad} (${item.Precio})");
+                //Console.WriteLine($"[DEBUG] Productos en carrito: {_items.Count}");
             }
         }
-
-        public IReadOnlyCollection<Item> ObtenerItems() => _items.Values.ToList().AsReadOnly();
 
 
         public decimal ObtenerSubtotal()

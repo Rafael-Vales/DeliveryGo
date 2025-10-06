@@ -6,18 +6,32 @@ namespace DeliveryGo.Carrito
 	public class QuitarItemCommand : ICarritoCommand
 	{
 		private readonly string _sku;
+        private Item? _backup;
 
-		public QuitarItemCommand(string sku)
+
+        public QuitarItemCommand(string sku)
 		{
 			_sku = sku;
 		}
 
 		public void Ejecutar(Carrito carrito)
 		{
-			carrito.QuitarItem(_sku);
+            _backup = carrito.ObtenerItem(_sku);
+            carrito.QuitarItem(_sku);
 		}
 
-		public override string ToString()
+        public void Deshacer(Carrito carrito)
+        {
+            
+            if (_backup != null)
+            {
+                carrito.AgregarItem(_backup); 
+            }
+        }
+
+
+
+        public override string ToString()
 		{
 			return $"Quitar: SKU {_sku}";
 		}

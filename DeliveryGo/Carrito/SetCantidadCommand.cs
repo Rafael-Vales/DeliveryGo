@@ -6,7 +6,10 @@ namespace DeliveryGo.Carrito
 	{
 		private readonly string _sku;
 		private readonly int _nuevaCantidad;
-		public SetCantidadCommand(string sku,int nuevaCantidad)
+        private int _cantidadAnterior;
+
+
+        public SetCantidadCommand(string sku,int nuevaCantidad)
 		{
 			_sku = sku;
 			_nuevaCantidad = nuevaCantidad;
@@ -15,8 +18,14 @@ namespace DeliveryGo.Carrito
 
 		public void Ejecutar (Carrito carrito)
 		{
-			carrito.CambiarCantidad(_sku, _nuevaCantidad);
-		}
+            _cantidadAnterior = carrito.ObtenerCantidad(_sku);
+            carrito.CambiarCantidad(_sku, _nuevaCantidad);
+        }
+
+        public void Deshacer(Carrito carrito)
+        {
+            carrito.CambiarCantidad(_sku, _cantidadAnterior);
+        }
 
         public override string ToString()
         {

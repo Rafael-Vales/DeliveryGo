@@ -51,5 +51,15 @@ namespace DeliveryGo.Carrito
         {
             return _carrito.ObtenerSubtotal();
         }
+
+        public void Undo()
+        {
+            _editor.Undo(_carrito);
+        }
+
+        public void Redo()
+        {
+            _editor.Redo(_carrito);
+        }
     }
 }
