@@ -69,7 +69,7 @@ namespace DeliveryGo.Utils
             Console.WriteLine($"Total (con envio): ${total}");
             Console.WriteLine();
 
-            Console.WriteLine("\nCarirto actual:");
+            Console.WriteLine("\nCarrito actual:");
             carrito.MostrarCarrito();
 
 
@@ -115,6 +115,7 @@ namespace DeliveryGo.Utils
 
             facade.ElegirEnvio(estrategia);
             Console.WriteLine($"Envío seleccionado: {estrategia.Nombre}");
+            Console.WriteLine();
             Console.WriteLine($"Recordá que el envío por correo es gratis a partir de: ${ConfigManager.Instance.EnvioGratisDesde}");
         }
 
@@ -130,6 +131,7 @@ namespace DeliveryGo.Utils
             }
 
             bool aplicarIVA = InputHelper.LeerSiNo("¿Aplicar IVA?: ");
+            Console.WriteLine();
 
             bool aplicarCupon = InputHelper.LeerSiNo("¿Aplicar cupón de descuento?: ");
 
