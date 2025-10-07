@@ -21,6 +21,7 @@
     <None Remove="Pedido\Core\Observers\" />
     <None Remove="Envio\Core\Singleton\" />
     <None Remove="Envio\Core\Strategy\" />
+    <None Remove="Utils\img\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Carrito\" />
@@ -36,5 +37,6 @@
     <Folder Include="Pedido\Core\Observers\" />
     <Folder Include="Envio\Core\Singleton\" />
     <Folder Include="Envio\Core\Strategy\" />
+    <Folder Include="Utils\img\" />
   </ItemGroup>
 </Project>
